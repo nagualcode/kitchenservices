@@ -3,3 +3,6 @@ CREATE TABLE customers (
     nome VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL
 );
+
+INSERT INTO customers (nome, email) 
+VALUES ('Example Customer', 'example.customer@example.com');
