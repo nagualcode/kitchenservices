@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:13
+    container_name: customer-postgres
+    environment:
+      POSTGRES_DB: customer_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - customer-net
+
+  customer-service:
+    build: .
+    container_name: customer-service
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/customer_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: secret
+    depends_on:
+      - postgres
+    networks:
+      - customer-net
+
+volumes:
+  postgres_data:
+
+networks:
+  customer-net:
