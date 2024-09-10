@@ -19,3 +19,6 @@ curl -X POST http://localhost:8080/customers \
 -d '{"nome": "John Doe", "email": "john.doe@example.com"}'
 
 curl -X GET http://localhost:8080/customers | jq .
+
+curl -X POST http://localhost:8081/orders -H "Content-Type: application/json" -d '{"customerId": 1, "valor": 99.99}'
+

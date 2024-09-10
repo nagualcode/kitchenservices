@@ -9,8 +9,8 @@ public class CustomerDTO {
     private String email;
     private List<Long> orders;
 
+    // Constructor
     public CustomerDTO() {
-        // Construtor padrão
     }
 
     public CustomerDTO(Long id, String nome, String email, List<Long> orders) {
@@ -20,8 +20,7 @@ public class CustomerDTO {
         this.orders = orders;
     }
 
-    // Getters e Setters
-
+    // Getters and Setters
     public Long getId() {
         return id;
     }

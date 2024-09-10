@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @RestController
@@ -28,8 +28,9 @@ public class CustomerController {
     // Obter todos os clientes
     @GetMapping
     public Flux<Customer> getAllCustomers() {
-        return Flux.defer(() -> Flux.fromIterable(customerRepository.findAll()));
+        return Flux.fromIterable(customerRepository.findAll());
     }
+
 
     // Obter um cliente por ID
     @GetMapping("/{id}")
@@ -53,6 +54,28 @@ public class CustomerController {
             }
         });
     }
+
+    // Atualizar apenas a lista de ordens de um cliente
+
+
+    @PutMapping("/{id}/orders")
+    @Transactional  // Adiciona suporte transacional para garantir atomicidade
+    public Mono<ResponseEntity<Customer>> addOrderToCustomer(@PathVariable Long id, @RequestBody Long orderId) {
+        return Mono.fromCallable(() -> {
+            Optional<Customer> optionalCustomer = customerRepository.findById(id);
+            if (optionalCustomer.isPresent()) {
+                Customer customer = optionalCustomer.get();
+                synchronized (customer.getOrders()) {  // Sincroniza o acesso à lista de ordens
+                    customer.getOrders().add(orderId);  // Adiciona a nova ordem de forma segura
+                }
+                customerRepository.save(customer);
+                return ResponseEntity.ok(customer);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        });
+    }
+
 
     // Deletar um cliente
     @DeleteMapping("/{id}")
