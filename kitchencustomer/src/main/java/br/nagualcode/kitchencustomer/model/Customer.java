@@ -1,17 +1,27 @@
 package br.nagualcode.kitchencustomer.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-@Table("customers")
+@Entity
 public class Customer {
-    
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
+
     private String email;
 
-    // Getters e setters
+    // Lista de IDs das ordens
+    @ElementCollection
+    @CollectionTable(name = "customer_orders", joinColumns = @JoinColumn(name = "customer_id"))
+    @Column(name = "order_id")
+    private List<Long> orders = new ArrayList<>();
+
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -34,5 +44,13 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Long> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Long> orders) {
+        this.orders = orders;
     }
 }
