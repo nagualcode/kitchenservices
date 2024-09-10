@@ -1,7 +1,8 @@
 package br.nagualcode.kitchenorders.controller;
 
+import br.nagualcode.kitchenorders.dto.OrderDTO;
+
 import br.nagualcode.kitchenorders.model.Order;
-import br.nagualcode.kitchenorders.model.Order.PaymentStatus;
 import br.nagualcode.kitchenorders.repository.OrderRepository;
 import br.nagualcode.kitchenorders.service.CustomerService;
 import br.nagualcode.kitchenorders.service.RabbitMQService;
@@ -25,55 +26,36 @@ public class OrderController {
         this.rabbitMQService = rabbitMQService;
     }
 
-    /**
-     * Cria uma nova ordem e associa ao cliente, publica no RabbitMQ.
-     */
     @PostMapping
-    public Mono<Order> createOrder(@RequestBody Order order) {
-        return customerService.getCustomerById(order.getCustomerId())
-            .flatMap(customer -> {
-                // Garantir que o status da ordem seja "Aguardando Pagamento"
-                order.setPaymentStatus(PaymentStatus.AGUARDANDO_PAGAMENTO);
+    public Mono<OrderDTO> createOrder(@RequestBody OrderDTO orderDTO) {
+        return customerService.getCustomerById(orderDTO.getCustomerId())
+            .flatMap(customerDTO -> {
+                // Converter DTO para entidade Order
+                Order newOrder = new Order(orderDTO.getCustomerId(), "Aguardando Pagamento", orderDTO.getValor());
 
                 // Salvar a ordem no banco
-                Order savedOrder = orderRepository.save(order);
+                Order savedOrder = orderRepository.save(newOrder);
 
-                // Adicionar o ID da ordem na lista de ordens do cliente
-                customer.getOrders().add(savedOrder.getId());
-                customerService.updateCustomerOrders(customer);
+                // Atualizar lista de ordens no cliente
+                customerDTO.getOrders().add(savedOrder.getId());
+                customerService.updateCustomerOrders(customerDTO);
 
                 // Publicar mensagem no RabbitMQ
-                rabbitMQService.sendOrderMessage(savedOrder, customer);
+                rabbitMQService.sendOrderMessage(savedOrder, customerDTO);
 
-                return Mono.just(savedOrder);
-            })
-            .switchIfEmpty(Mono.error(new IllegalArgumentException("Cliente não encontrado")));
+                // Converter a entidade salva de volta para DTO e retornar
+                return Mono.just(new OrderDTO(savedOrder.getId(), savedOrder.getCustomerId(), savedOrder.getStatus(), savedOrder.getValor()));
+            });
     }
 
-    /**
-     * Deleta uma ordem pelo ID. Não remove o ID da lista de ordens do cliente.
-     */
     @DeleteMapping("/{id}")
     public Mono<Void> deleteOrder(@PathVariable Long id) {
-        return Mono.fromRunnable(() -> {
-            // Deletar a ordem do banco
-            orderRepository.deleteById(id);
-        });
+        return Mono.fromRunnable(() -> orderRepository.deleteById(id));
     }
 
-    /**
-     * Busca todas as ordens.
-     */
     @GetMapping
-    public Flux<Order> getAllOrders() {
-        return Flux.defer(() -> Flux.fromIterable(orderRepository.findAll()));
-    }
-
-    /**
-     * Busca uma ordem pelo ID.
-     */
-    @GetMapping("/{id}")
-    public Mono<Order> getOrderById(@PathVariable Long id) {
-        return Mono.fromCallable(() -> orderRepository.findById(id).orElse(null));
+    public Flux<OrderDTO> getAllOrders() {
+        return Flux.defer(() -> Flux.fromIterable(orderRepository.findAll()))
+            .map(order -> new OrderDTO(order.getId(), order.getCustomerId(), order.getStatus(), order.getValor()));
     }
 }

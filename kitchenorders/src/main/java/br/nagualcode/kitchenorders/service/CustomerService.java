@@ -11,21 +11,22 @@ public class CustomerService {
     private final WebClient webClient;
 
     public CustomerService(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("http://customer-service-url/customers").build();
+        this.webClient = webClientBuilder.baseUrl("http://customers-service:8080").build();
     }
 
-    public Mono<CustomerDTO> getCustomerById(Long id) {
-        return webClient.get()
-                .uri("/{id}", id)
+    public Mono<CustomerDTO> getCustomerById(Long customerId) {
+        return this.webClient.get()
+                .uri("/customers/{id}", customerId)
                 .retrieve()
                 .bodyToMono(CustomerDTO.class);
     }
 
-    public Mono<Void> updateCustomerOrders(CustomerDTO customer) {
-        return webClient.put()
-                .uri("/{id}", customer.getId())
-                .bodyValue(customer)
+    public void updateCustomerOrders(CustomerDTO customerDTO) {
+        this.webClient.put()
+                .uri("/customers/{id}/orders", customerDTO.getId())
+                .bodyValue(customerDTO)
                 .retrieve()
-                .bodyToMono(Void.class);
+                .bodyToMono(Void.class)
+                .subscribe();
     }
 }

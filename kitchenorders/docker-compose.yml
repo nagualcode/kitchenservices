@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  postgres-orders:
+    image: postgres:13
+    container_name: orders-postgres
+    environment:
+      POSTGRES_DB: orders_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5433:5432"  # Diferente do postgres do kitchencustomers
+    volumes:
+      - orders_postgres_data:/var/lib/postgresql/data
+    networks:
+      - orders-net
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq-orders
+    ports:
+      - "5672:5672"   # Porta padrão do RabbitMQ
+      - "15672:15672" # Porta de administração
+    networks:
+      - orders-net
+
+  kitchenorders-service:
+    build: .
+    container_name: kitchenorders-service
+    ports:
+      - "8081:8081"  # Porta diferente do kitchencustomers
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-orders:5432/orders_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: secret
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+    depends_on:
+      - postgres-orders
+      - rabbitmq
+    networks:
+      - orders-net
+
+volumes:
+  orders_postgres_data:
+
+networks:
+  orders-net:
+    driver: bridge

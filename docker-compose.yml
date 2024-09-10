@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  # Serviço do kitchencustomer
+  kitchencustomer-service:
+    build: ./kitchencustomer
+    container_name: kitchencustomer-service
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://customer-postgres:5432/customer_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: secret
+    depends_on:
+      - customer-postgres
+    networks:
+      - kitchen-net
+
+  # Banco de dados para kitchencustomer
+  customer-postgres:
+    image: postgres:13
+    container_name: customer-postgres
+    environment:
+      POSTGRES_DB: customer_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - customer_postgres_data:/var/lib/postgresql/data
+    networks:
+      - kitchen-net
+
+  # Serviço do kitchenorders
+  kitchenorders-service:
+    build: ./kitchenorders
+    container_name: kitchenorders-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://orders-postgres:5432/orders_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: secret
+      RABBITMQ_HOST: rabbitmq-orders
+      SPRING_RABBITMQ_HOST: rabbitmq-orders
+    depends_on:
+      - orders-postgres
+      - rabbitmq-orders
+    networks:
+      - kitchen-net
+
+  # Banco de dados para kitchenorders
+  orders-postgres:
+    image: postgres:13
+    container_name: orders-postgres
+    environment:
+      POSTGRES_DB: orders_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5433:5432"
+    volumes:
+      - orders_postgres_data:/var/lib/postgresql/data
+    networks:
+      - kitchen-net
+
+  # RabbitMQ
+  rabbitmq-orders:
+    image: rabbitmq:3-management
+    container_name: rabbitmq-orders
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - kitchen-net
+
+volumes:
+  customer_postgres_data:
+  orders_postgres_data:
+
+networks:
+  kitchen-net:
+    driver: bridge

@@ -1,9 +1,8 @@
 package br.nagualcode.kitchenorders.service;
 
-import br.nagualcode.kitchenorders.model.Order;
 import br.nagualcode.kitchenorders.dto.CustomerDTO;
+import br.nagualcode.kitchenorders.model.Order;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,47 +10,42 @@ public class RabbitMQService {
 
     private final RabbitTemplate rabbitTemplate;
 
-    @Value("${rabbitmq.exchange}")
-    private String exchange;
-
-    @Value("${rabbitmq.routingkey}")
-    private String routingKey;
-
     public RabbitMQService(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
 
     public void sendOrderMessage(Order order, CustomerDTO customer) {
-        OrderMessage orderMessage = new OrderMessage(order, customer);
-        rabbitTemplate.convertAndSend(exchange, routingKey, orderMessage);
+        // Envio de mensagem ao RabbitMQ
+        String exchange = "order.exchange";
+        String routingKey = "order.created";
+        OrderCustomerMessage message = new OrderCustomerMessage(order, customer);
+        rabbitTemplate.convertAndSend(exchange, routingKey, message);
     }
 
-    static class OrderMessage {
+    static class OrderCustomerMessage {
         private Order order;
         private CustomerDTO customer;
 
-        public OrderMessage(Order order, CustomerDTO customer) {
+        public OrderCustomerMessage(Order order, CustomerDTO customer) {
             this.order = order;
             this.customer = customer;
         }
 
-		public Order getOrder() {
-			return order;
-		}
+        // Getters and Setters
+        public Order getOrder() {
+            return order;
+        }
 
-		public void setOrder(Order order) {
-			this.order = order;
-		}
+        public void setOrder(Order order) {
+            this.order = order;
+        }
 
-		public CustomerDTO getCustomer() {
-			return customer;
-		}
+        public CustomerDTO getCustomer() {
+            return customer;
+        }
 
-		public void setCustomer(CustomerDTO customer) {
-			this.customer = customer;
-		}
-
-      
-        
+        public void setCustomer(CustomerDTO customer) {
+            this.customer = customer;
+        }
     }
 }

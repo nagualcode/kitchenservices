@@ -1,30 +1,20 @@
-package br.nagualcode.kitchenorders.model;
+package br.nagualcode.kitchenorders.dto;
 
-import jakarta.persistence.*;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "orders")
-public class Order {
+public class OrderDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "customer_id", nullable = false)
     private Long customerId;
-
-    @Column(name = "status", nullable = false)
     private String status;
-
-    @Column(name = "valor", nullable = false)
     private BigDecimal valor;
 
-    public Order() {
+    public OrderDTO() {
         // Construtor padrão
     }
 
-    public Order(Long customerId, String status, BigDecimal valor) {
+    public OrderDTO(Long id, Long customerId, String status, BigDecimal valor) {
+        this.id = id;
         this.customerId = customerId;
         this.status = status;
         this.valor = valor;
