@@ -1,0 +1,85 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.3)
+
+2024-09-10T02:08:51.789Z  INFO 1 --- [kitchenorders] [           main] b.n.k.KitchenordersApplication           : Starting KitchenordersApplication v0.0.1-SNAPSHOT using Java 17.0.2 with PID 1 (/app/kitchenorders.jar started by root in /app)
+2024-09-10T02:08:51.825Z  INFO 1 --- [kitchenorders] [           main] b.n.k.KitchenordersApplication           : No active profile set, falling back to 1 default profile: "default"
+2024-09-10T02:09:01.467Z  INFO 1 --- [kitchenorders] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-10T02:09:02.541Z  INFO 1 --- [kitchenorders] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1028 ms. Found 1 JPA repository interface.
+2024-09-10T02:09:07.974Z  INFO 1 --- [kitchenorders] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-09-10T02:09:08.042Z  INFO 1 --- [kitchenorders] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-09-10T02:09:08.042Z  INFO 1 --- [kitchenorders] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-10T02:09:08.338Z  INFO 1 --- [kitchenorders] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-09-10T02:09:08.347Z  INFO 1 --- [kitchenorders] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 15847 ms
+2024-09-10T02:09:11.618Z  INFO 1 --- [kitchenorders] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-09-10T02:09:12.534Z  INFO 1 --- [kitchenorders] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4b544732
+2024-09-10T02:09:12.548Z  INFO 1 --- [kitchenorders] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-09-10T02:09:12.904Z  INFO 1 --- [kitchenorders] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://orders-postgres:5432/orders_db (PostgreSQL 13.16)
+2024-09-10T02:09:13.136Z  INFO 1 --- [kitchenorders] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2024-09-10T02:09:13.153Z  INFO 1 --- [kitchenorders] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.119s)
+2024-09-10T02:09:13.240Z  INFO 1 --- [kitchenorders] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2024-09-10T02:09:13.480Z  INFO 1 --- [kitchenorders] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2024-09-10T02:09:13.519Z  INFO 1 --- [kitchenorders] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - create orders table"
+2024-09-10T02:09:13.685Z  INFO 1 --- [kitchenorders] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "public", now at version v1 (execution time 00:00.030s)
+2024-09-10T02:09:14.340Z  INFO 1 --- [kitchenorders] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-10T02:09:14.638Z  INFO 1 --- [kitchenorders] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-09-10T02:09:14.827Z  INFO 1 --- [kitchenorders] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-09-10T02:09:16.012Z  INFO 1 --- [kitchenorders] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-10T02:09:20.000Z  INFO 1 --- [kitchenorders] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-10T02:09:20.017Z  INFO 1 --- [kitchenorders] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-10T02:09:23.510Z  WARN 1 --- [kitchenorders] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-10T02:09:25.342Z  INFO 1 --- [kitchenorders] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-09-10T02:09:25.579Z  INFO 1 --- [kitchenorders] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2024-09-10T02:09:25.622Z  INFO 1 --- [kitchenorders] [           main] b.n.k.KitchenordersApplication           : Started KitchenordersApplication in 36.992 seconds (process running for 43.611)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.3)
+
+2024-09-10T02:08:51.699Z  INFO 1 --- [kitchencustomer] [           main] b.n.k.KitchencustomerApplication         : Starting KitchencustomerApplication v0.0.1-SNAPSHOT using Java 17.0.2 with PID 1 (/app/kitchencustomer.jar started by root in /app)
+2024-09-10T02:08:51.730Z  INFO 1 --- [kitchencustomer] [           main] b.n.k.KitchencustomerApplication         : No active profile set, falling back to 1 default profile: "default"
+2024-09-10T02:08:58.961Z  INFO 1 --- [kitchencustomer] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-10T02:08:59.001Z  INFO 1 --- [kitchencustomer] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2024-09-10T02:08:59.180Z  INFO 1 --- [kitchencustomer] [           main] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface br.nagualcode.kitchencustomer.repository.CustomerRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-09-10T02:08:59.183Z  INFO 1 --- [kitchencustomer] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 145 ms. Found 0 JDBC repository interfaces.
+2024-09-10T02:08:59.247Z  INFO 1 --- [kitchencustomer] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-10T02:08:59.251Z  INFO 1 --- [kitchencustomer] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-10T02:09:00.170Z  INFO 1 --- [kitchencustomer] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 890 ms. Found 1 JPA repository interface.
+2024-09-10T02:09:03.592Z  INFO 1 --- [kitchencustomer] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-09-10T02:09:03.654Z  INFO 1 --- [kitchencustomer] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-09-10T02:09:03.655Z  INFO 1 --- [kitchencustomer] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-10T02:09:03.995Z  INFO 1 --- [kitchencustomer] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-09-10T02:09:03.998Z  INFO 1 --- [kitchencustomer] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 11710 ms
+2024-09-10T02:09:05.630Z  INFO 1 --- [kitchencustomer] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-09-10T02:09:06.580Z  INFO 1 --- [kitchencustomer] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@60e1d87c
+2024-09-10T02:09:06.586Z  INFO 1 --- [kitchencustomer] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-09-10T02:09:06.708Z  INFO 1 --- [kitchencustomer] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://customer-postgres:5432/customer_db (PostgreSQL 13.16)
+2024-09-10T02:09:06.870Z  INFO 1 --- [kitchencustomer] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2024-09-10T02:09:06.886Z  INFO 1 --- [kitchencustomer] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.067s)
+2024-09-10T02:09:07.008Z  INFO 1 --- [kitchencustomer] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2024-09-10T02:09:07.522Z  INFO 1 --- [kitchencustomer] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2024-09-10T02:09:07.569Z  INFO 1 --- [kitchencustomer] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - create customers table"
+2024-09-10T02:09:07.760Z  INFO 1 --- [kitchencustomer] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "public", now at version v1 (execution time 00:00.071s)
+2024-09-10T02:09:08.363Z  INFO 1 --- [kitchencustomer] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-10T02:09:09.010Z  INFO 1 --- [kitchencustomer] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-09-10T02:09:09.204Z  INFO 1 --- [kitchencustomer] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-09-10T02:09:11.513Z  INFO 1 --- [kitchencustomer] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-10T02:09:15.581Z  INFO 1 --- [kitchencustomer] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-10T02:09:15.830Z  INFO 1 --- [kitchencustomer] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-10T02:09:17.449Z  WARN 1 --- [kitchencustomer] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-10T02:09:19.424Z  INFO 1 --- [kitchencustomer] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2024-09-10T02:09:19.477Z  INFO 1 --- [kitchencustomer] [           main] b.n.k.KitchencustomerApplication         : Started KitchencustomerApplication in 30.939 seconds (process running for 37.242)
+2024-09-10T02:11:28.504Z  INFO 1 --- [kitchencustomer] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-10T02:11:28.504Z  INFO 1 --- [kitchencustomer] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-09-10T02:11:28.510Z  INFO 1 --- [kitchencustomer] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
